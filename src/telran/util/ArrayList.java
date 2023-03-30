@@ -26,28 +26,37 @@ public ArrayList(int capacity) {
 		array= Arrays.copyOf(array, array.length*2);	
 	}
 	
-	@Override
-	public void add(int index, T obj) {
-		// TODO Auto-generated method stub
+    @Override
+    public void add(int index, T obj) {
+        
+        if (size == array.length) {
+            reallocate();
+        }
+        System.arraycopy(array, index, array, index + 1, size - index);
+        array[index] = obj;
+        size++;
+    }
 
-	}
+    @Override
+    public T remove(int index) {
+        T removed = array[index];
+        System.arraycopy(array, index + 1, array, index, size - index - 1);
+        size--;
+        return removed;
+    }
 
-	@Override
-	public T remove(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public T get(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public int size() {
 	
 		return size;
 	}
+	@Override
+	public T get(int index) {
+	    return array[index];
+	}
+
 
 }
