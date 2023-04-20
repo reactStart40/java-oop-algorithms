@@ -137,6 +137,13 @@ void setUp() {
 				persons.toArray(new Person[0]));
 		
 	}
+	@Test
+	void testEvenOddSorting() {
+		Integer[] expected = { -20,  10, 30, 50, 100, 7, -17};
+		list.add(-17);
+		list.sort(new EvenOddComp());
+		assertArrayEquals(expected, list.toArray(new Integer[0]));
+	}
 	private void runTest(Integer[] expected) {
 		int size = list.size() ;
 		Integer [] actual = new Integer[expected.length];
