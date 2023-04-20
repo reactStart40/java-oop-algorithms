@@ -1,6 +1,7 @@
 package telran.util;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class ArrayList<T> implements List<T> {
 	private static final int DEFAULT_CAPACITY = 16;
@@ -28,11 +29,11 @@ public class ArrayList<T> implements List<T> {
 
 	private void reallocate() {
 		array = Arrays.copyOf(array, array.length * 2);
+
 	}
 
 	@Override
 	public void add(int index, T obj) {
-
 		if (size == array.length) {
 			reallocate();
 		}
@@ -43,10 +44,17 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public T remove(int index) {
-		T removed = array[index];
+		T res = array[index];
+
 		System.arraycopy(array, index + 1, array, index, size - index - 1);
 		size--;
-		return removed;
+		return res;
+	}
+
+	@Override
+	public T get(int index) {
+		T res = array[index];
+		return res;
 	}
 
 	@Override
@@ -56,34 +64,27 @@ public class ArrayList<T> implements List<T> {
 	}
 
 	@Override
-	public T get(int index) {
-		return array[index];
-	}
-
-	@Override
 	public boolean remove(T pattern) {
+		boolean res = false;
 		int index = indexOf(pattern);
-		return (index >= 0) ? remove(index) != null : false;
+		if (index > -1) {
+			res = true;
+			remove(index);
+		}
+		return res;
 	}
 
 	@Override
-	public T[] toArray(T[] array) {
-		int size = this.size;
-		if (array.length < size) {
-			T[] buffer = Arrays.copyOf(array, size);
-			for (int i = 0; i < size; i++) {
-				buffer[i] = this.get(i);
-			}
-			return buffer;
-		} else {
-			for (int i = 0; i < size; i++) {
-				array[i] = this.get(i);
-			}
-			if (array.length > size) {
-				array[size] = null;
-			}
-			return array;
+	public T[] toArray(T[] ar) {
+		if (ar.length < size) {
+			ar = Arrays.copyOf(ar, size);
 		}
+		System.arraycopy(array, 0, ar, 0, size);
+		if (ar.length > size) {
+			ar[size] = null;
+		}
+
+		return ar;
 	}
 
 	@Override
@@ -96,7 +97,6 @@ public class ArrayList<T> implements List<T> {
 			}
 			index++;
 		}
-
 		return res;
 	}
 
@@ -108,7 +108,7 @@ public class ArrayList<T> implements List<T> {
 	@Override
 	public int lastIndexOf(T pattern) {
 		int res = -1;
-		int index = array.length - 1;
+		int index = size - 1;
 		while (index >= 0 && res == -1) {
 			if (isEqual(array[index], pattern)) {
 				res = index;
@@ -117,4 +117,17 @@ public class ArrayList<T> implements List<T> {
 		}
 		return res;
 	}
+
+	@Override
+	public void sort() {
+		Arrays.sort(array, 0, size);
+		
+	}
+
+	@Override
+	public void sort(Comparator<T> comp) {
+		Arrays.sort(array,  0, size, comp);
+		
+	}
+
 }
