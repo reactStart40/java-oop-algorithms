@@ -170,12 +170,13 @@ void setUp() {
 	}
 
 	@Test
-	void testRemoveIf() {
-	assertFalse(list.removeIf(a -> a==null));
-	assertTrue(list.removeIf(a-> a % 3==0));
-	assertTrue(list.removeIf(a-> a % 2==0 && a<0));
-	assertFalse(list.removeIf(a -> a == 500));
-	assertTrue(list.removeIf(a -> a % 5 == 0));
+	void testRemoveIfPredicate() {
+		Integer[] expected = {10, -20,  50, 100, 30};
+		assertFalse(list.removeIf(a -> a % 2 != 0
+				&& a >= 10));
+		assertTrue(list.removeIf(a -> a % 2 != 0));
+		runTest(expected);
+		
 	}
 	
 	private void runTest(Integer[] expected) {

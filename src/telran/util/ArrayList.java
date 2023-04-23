@@ -179,13 +179,21 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public boolean removeIf(Predicate<T> predicate) {
-	    boolean res = false;
-	    int index = indexOf(predicate);
-	    while (index != -1) {
-	        remove(index);
-	        res = true;
-	        index = indexOf(predicate);
-	    }
-	    return res;
+		int oldSize = size;
+//		int i = 0;
+//		while(i < size) {
+//			if(predicate.test(array[i])) {
+//				remove(i);
+//			} else {
+//				i++;
+//			}
+//		}
+		for(int i = size - 1; i >= 0; i--) {
+			if(predicate.test(array[i])) {
+				remove(i);
+			} 
+		}
+		return oldSize > size;
 	}
+
 }
