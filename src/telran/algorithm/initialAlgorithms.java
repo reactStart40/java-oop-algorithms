@@ -1,5 +1,8 @@
 package telran.algorithm;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 public class initialAlgorithms {
 	public static void sortShortPositive(short[] array) {
 		int[] helper = new int[Short.MAX_VALUE];
@@ -88,4 +91,33 @@ public class initialAlgorithms {
 		} while (flUnsorted);
 
 	}
+
+public static <T> int binarySearchInsert(T[] array, T key, Comparator<T> comp, T valueToInsert) {
+    int leftIndex = 0;
+    int rightIndex = array.length - 1;
+    int middleIndex = rightIndex / 2;
+    int compRes = 0;
+    while (leftIndex <= rightIndex && (compRes = comp.compare(key, array[middleIndex])) != 0) {
+        if (compRes > 0) {
+            leftIndex = middleIndex + 1;
+        } else {
+            rightIndex = middleIndex - 1;
+        }
+        middleIndex = (leftIndex + rightIndex) / 2;
+    }
+    if (compRes == 0) {
+
+        int firstIndex = middleIndex; 
+        while (firstIndex > 0 && comp.compare(key, array[firstIndex - 1]) == 0) {
+            firstIndex--;
+        }
+        return firstIndex;
+    } else {
+        T[] newArray = Arrays.copyOf(array, array.length + 1);
+        int insertIndex = compRes > 0 ? middleIndex + 1 : middleIndex;
+        System.arraycopy(array, insertIndex, newArray, insertIndex + 1, newArray.length - insertIndex - 1);
+        newArray[insertIndex] = valueToInsert;
+        return insertIndex;
+    }
+}
 }
