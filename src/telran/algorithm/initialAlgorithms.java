@@ -52,20 +52,21 @@ public class initialAlgorithms {
 			candidate = (short) Math.abs(array[i]);
 			if (array[i] < 0) {
 
-				if (helper[candidate] == 1 && candidate > res) {
-					res = candidate;
-				} else if (helper[candidate] == 0) {
-					helper[candidate] = -1;
-				}
+				res = getRes(res, helper, candidate,1);
 			} else {
-				if (helper[candidate] == -1 && candidate > res) {
-					res = candidate;
-				} else if (helper[candidate] == 0) {
-					helper[candidate] = 1;
-				}
+				res = getRes(res, helper, candidate,-1);
 			}
 		}
 
+		return res;
+	}
+
+	private static short getRes(short res, byte[] helper, short candidate, int sign) {
+		if (helper[candidate] == 1*sign && candidate > res) {
+			res = candidate;
+		} else if (helper[candidate] == 0) {
+			helper[candidate] = (byte) (-1*sign);
+		}
 		return res;
 	}
 

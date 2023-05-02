@@ -64,5 +64,27 @@ class InitialAlgorithmsTest {
 		assertEquals(-1,
 				getMaxPositiveWithNegativeReflect(array2));
 	}
-
+	@Test
+	@Disabled
+	void maxValueComplexityNTest() {
+		assertEquals(Long.MAX_VALUE, getMaxValueComplexityN());
+	}
+	@Test
+	void maxValueComplexityLogNTest() {
+		assertEquals(Long.MAX_VALUE, getMaxValueComplexityLogN());
+	}
+	private Long getMaxValueComplexityN() {
+		long res = 1;
+		while(res > 0) {
+			res++;
+		}
+		return res - 1;
+	}
+	private Long getMaxValueComplexityLogN() {
+		long res = 1;
+		while(res > 0) {
+			res *= 2;
+		}
+		return res - 1;
+	}
 }
