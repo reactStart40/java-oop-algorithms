@@ -89,33 +89,29 @@ class InitialAlgorithmsTest {
 	}
 	
 	@Test
-	public void testBinarySearchInsert() {
-	    Integer[] arr = {1, 3, 5, 7, 9};
-	    int index1 = binarySearchInsert(arr, 5, Integer::compare, 5);
-	    assertEquals(2, index1);
-
-	    int index2 = binarySearchInsert(arr, 4, Integer::compare, 4);
-	    assertEquals(2, index2);
-
-	    int index3 = binarySearchInsert(arr, 0, Integer::compare, 0);
-	    assertEquals(0, index3);
-
-	    int index4 = binarySearchInsert(arr, 10, Integer::compare, 10);
-	    assertEquals(5, index4);
-
-	    int index5 = binarySearchInsert(arr, 8, Integer::compare, 6);
-	    assertEquals(3, index5);
-
-	    Integer[] arr2 = {};
-	    int index6 = binarySearchInsert(arr2, 5, Integer::compare, 5);
-	    assertEquals(0, index6);
-
-	  
-	    Integer[] arr3 = {5};
-	    int index7 = binarySearchInsert(arr3, 5, Integer::compare, 5);
-	    assertEquals(0, index7);
-	    int index8 = binarySearchInsert(arr3, 6, Integer::compare, 6);
-	    assertEquals(1, index8);
+	void binarySearchTest() {
+		Integer ar[] = { 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 20, 40 };
+		assertEquals(-14, binarySearch(ar, 3, Integer::compare));
+		assertEquals(3, binarySearch(ar, 2, Integer::compare ));
+		assertEquals(-1, binarySearch(ar, 0, Integer::compare));
+		assertEquals(13, binarySearch(ar, 4, Integer::compare));
+		assertEquals(0, binarySearch(ar, 1, Integer::compare));
+		assertEquals(-16, binarySearch(ar, 25, Integer::compare));
+		assertEquals(-17, binarySearch(ar, 45, Integer::compare));
 	}
-
-}
+	
+	private Long getMaxValueComplexityN1() {
+		long res = 1;
+		while(res > 0) {
+			res++;
+		}
+		return res - 1;
+	}
+	private Long getMaxValueComplexityLogN1() {
+		long res = 1;
+		while(res > 0) {
+			res *= 2;
+		}
+		return res - 1;
+	}
+	}

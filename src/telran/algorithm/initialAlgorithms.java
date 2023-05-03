@@ -91,33 +91,19 @@ public class initialAlgorithms {
 		} while (flUnsorted);
 
 	}
-
-public static <T> int binarySearchInsert(T[] array, T key, Comparator<T> comp, T valueToInsert) {
-    int leftIndex = 0;
-    int rightIndex = array.length - 1;
-    int middleIndex = rightIndex / 2;
-    int compRes = 0;
-    while (leftIndex <= rightIndex && (compRes = comp.compare(key, array[middleIndex])) != 0) {
-        if (compRes > 0) {
-            leftIndex = middleIndex + 1;
-        } else {
-            rightIndex = middleIndex - 1;
-        }
-        middleIndex = (leftIndex + rightIndex) / 2;
-    }
-    if (compRes == 0) {
-
-        int firstIndex = middleIndex; 
-        while (firstIndex > 0 && comp.compare(key, array[firstIndex - 1]) == 0) {
-            firstIndex--;
-        }
-        return firstIndex;
-    } else {
-        T[] newArray = Arrays.copyOf(array, array.length + 1);
-        int insertIndex = compRes > 0 ? middleIndex + 1 : middleIndex;
-        System.arraycopy(array, insertIndex, newArray, insertIndex + 1, newArray.length - insertIndex - 1);
-        newArray[insertIndex] = valueToInsert;
-        return insertIndex;
-    }
-}
+	public static <T> int binarySearch(T[] array, T key, Comparator<T> comp) {
+		int left = 0;
+		int right = array.length - 1;
+		int middle = right / 2;
+		while (left <= right && comp.compare(key, array[left])!= 0) {
+			if (comp.compare(key, array[middle]) <= 0) {
+				right = middle - 1;
+			} else {
+				left = middle + 1;
+			}
+			middle = (right + left) / 2;
+		}
+		return left < array.length && comp.compare(key, array[left])== 0 ?
+				left : -left - 1;
+	}
 }
