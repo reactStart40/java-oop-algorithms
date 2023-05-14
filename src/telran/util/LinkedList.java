@@ -76,7 +76,9 @@ public class LinkedList<T> implements List<T> {
 		}
 		Node<T> node = getNode(index);
 		removeNode(node);
-		return node.obj;
+		T res = node.obj;
+		node.obj = null;
+		return res;
 	}
 
 	@Override
@@ -100,13 +102,17 @@ public class LinkedList<T> implements List<T> {
 
 	@Override
 	public void sort() {
-		// no implement
+		//TODO
 
 	}
 
 	@Override
 	public void sort(Comparator<T> comp) {
-		// no implement
+		//TODO
+		//1. call the method toArray
+		//2. By applying Arrays.sort you sort the array from #1
+		//3. Passing over all LinkedList nodes and setting references to objects (T)
+		// in the appropriate order from #2
 
 	}
 
@@ -246,7 +252,7 @@ public class LinkedList<T> implements List<T> {
 
 	private boolean isEqual(T object, T pattern) {
 
-		return pattern == null ? object == pattern : pattern.equals(object);
+		return pattern == null  ? object == pattern : pattern.equals(object);
 	}
 
 }
