@@ -1,6 +1,7 @@
 package telran.util.test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.Comparator;
 
 import org.junit.jupiter.api.BeforeEach;
 
@@ -79,7 +80,7 @@ protected Collection<Integer> getCollection() {
 	@Test
 	void testSort() {
 		Integer expected[] = {-20, 7, 10, 30,  50, 100 };
-		list.sort();
+		list.sort(Comparator.naturalOrder());
 		assertArrayEquals(expected,
 				list.toArray(new Integer[0]));
 	}
@@ -133,12 +134,6 @@ protected Collection<Integer> getCollection() {
 		list.add(-17);
 		assertEquals(-1, list.indexOf(a -> a % 2 != 0 && a > 7));
 	}
-	@Test
-	void testRemoveIfAll() {
-		assertTrue(list.removeIf(a -> true));
-		assertEquals(0, list.size());
-	}
-	
 
 	static private int evenOddCompare(Integer a, Integer b) {
 		int res = Math.abs(a % 2) - Math.abs(b % 2);

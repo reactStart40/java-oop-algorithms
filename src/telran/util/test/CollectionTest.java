@@ -33,15 +33,21 @@ public abstract class CollectionTest {
 	assertTrue(collection.add(numbers[0]));
 	assertEquals(numbers.length + 1, collection.size());
 	}
-	
 	@Test
-	void testRemoveIfPredicate() {
-		Integer[] expected = {10, -20,  50, 100, 30};
-		assertFalse(collection.removeIf(a -> a % 2 != 0
-				&& a >= 10));
-		assertTrue(collection.removeIf(a -> a % 2 != 0));
-		runTest(expected);
+	void testRemovePattern() {
+		Integer [] expectedNo10 = { -20, 7, 50, 100, 30};
+		Integer [] expectedNo10_50 = { -20, 7,  100, 30};
+		Integer [] expectedNo10_50_30 = { -20, 7,  100};
+		assertTrue(collection.remove(numbers[0]));
+		runTest(expectedNo10);
+		Integer objToRemove = 50;
+		assertTrue(collection.remove(objToRemove));
+		runTest(expectedNo10_50);
+		assertTrue(collection.remove((Integer)30));
+		runTest(expectedNo10_50_30);
+		assertFalse(collection.remove((Integer)50));
 	}
+	
 	@Test
 	void testToArrayForBigArray() {
 		Integer bigArray[] = new Integer[BIG_LENGTH];
@@ -63,21 +69,17 @@ public abstract class CollectionTest {
 		assertArrayEquals(numbers, actualArray);
 	}
 	@Test
-	void testRemovePattern() {
-		Integer [] expectedNo10 = { -20, 7, 50, 100, 30};
-		Integer [] expectedNo10_50 = { -20, 7,  100, 30};
-		Integer [] expectedNo10_50_30 = { -20, 7,  100};
-		assertTrue(collection.remove(numbers[0]));
-		runTest(expectedNo10);
-		Integer objToRemove = 50;
-		assertTrue(collection.remove(objToRemove));
-		runTest(expectedNo10_50);
-		assertTrue(collection.remove((Integer)30));
-		runTest(expectedNo10_50_30);
-		assertFalse(collection.remove((Integer)50));
-		
-		
-		
+	 void testRemoveIfAll() {
+		assertTrue(collection.removeIf(a-> true));
+		assertEquals(0, collection.size());
+	}
+	@Test
+	void testRemoveIfPredicate() {
+		Integer[] expected = {10, -20,  50, 100, 30};
+		assertFalse(collection.removeIf(a -> a % 2 != 0
+				&& a >= 10));
+		assertTrue(collection.removeIf(a -> a % 2 != 0));
+		runTest(expected);
 	}
 	protected void runTest(Integer[] expected) {
 	Integer [] actual = collection.toArray(new Integer[0]);
