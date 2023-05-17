@@ -113,7 +113,7 @@ public class ArrayList<T> implements List<T> {
 		return lastIndexOf(obj -> isEqual(obj, pattern));
 	}
 
-	//@SuppressWarnings("unchecked")
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void sort() {
