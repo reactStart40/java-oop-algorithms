@@ -2,13 +2,28 @@ package telran.util;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.function.Predicate;
 
 public class ArrayList<T> implements List<T> {
 	private static final int DEFAULT_CAPACITY = 16;
 	private T[] array;
 	private int size;
+private class ArrayListIterator implements Iterator<T> {
 
+	@Override
+	public boolean hasNext() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public T next() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+}
 	@SuppressWarnings("unchecked")
 	public ArrayList(int capacity) {
 		array = (T[]) new Object[capacity];
@@ -72,53 +87,6 @@ public class ArrayList<T> implements List<T> {
 	public int size() {
 
 		return size;
-	}
-
-	@Override
-	public boolean remove(T pattern) {
-		boolean res = false;
-		int index = indexOf(pattern);
-		if (index > -1) {
-			res = true;
-			remove(index);
-		}
-		return res;
-	}
-
-	@Override
-	public T[] toArray(T[] ar) {
-		if (ar.length < size) {
-			ar = Arrays.copyOf(ar, size);
-		}
-		System.arraycopy(array, 0, ar, 0, size);
-		if (ar.length > size) {
-			ar[size] = null;
-		}
-
-		return ar;
-	}
-
-	@Override
-	public int indexOf(T pattern) {
-		return indexOf(obj -> isEqual(obj, pattern));
-	}
-
-	private boolean isEqual(T object, T pattern) {
-
-		return pattern == null ? object == pattern : pattern.equals(object);
-	}
-
-	@Override
-	public int lastIndexOf(T pattern) {
-		return lastIndexOf(obj -> isEqual(obj, pattern));
-	}
-
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public void sort() {
-		sort((Comparator<T>)Comparator.naturalOrder());
-		
 	}
 
 	@Override
@@ -188,6 +156,12 @@ public class ArrayList<T> implements List<T> {
 			} 
 		}
 		return oldSize > size;
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		
+		return new ArrayListIterator();
 	}
 
 }
