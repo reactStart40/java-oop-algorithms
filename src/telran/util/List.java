@@ -8,13 +8,14 @@ public interface List<T> extends Collection<T> {
 void add(int index, T obj);
 T remove(int index);
 T get(int index) ;
+@SuppressWarnings("unchecked")
+default void sort() {
+	sort((Comparator<T>)Comparator.naturalOrder());
+
+}
 void sort(Comparator<T> comp);
 int indexOf(Predicate<T> predicate);
 int lastIndexOf(Predicate<T> predicate);
-
-default  void sort() {
-	sort((Comparator<T>)Comparator.naturalOrder());
-}
 @Override
  default public boolean remove(T pattern) {
 	boolean res = false;
@@ -27,27 +28,15 @@ default  void sort() {
 }
 @Override
 default boolean contains(T pattern) {
-	return indexOf(pattern)> -1;
+	return indexOf(pattern) > -1;
 }
+
 default int indexOf(T pattern) {
 	return indexOf(obj -> isEqual(obj, pattern));
 }
-
-default public T[] toArray(T[] ar) {
-	int size =size();
-	if (ar.length < size) {
-		ar = Arrays.copyOf(ar, size);
-	}
-	for (int i=0; i<size; i++) {
-	ar[i]=get(i);
-	}
-	if (ar.length > size) {
-		ar[size] = null;
-	}
-	return ar;
-}
-default public int lastIndexOf(T pattern) {
+default int lastIndexOf(T pattern) {
 	return lastIndexOf(obj -> isEqual(obj, pattern));
 }
+
 
 }

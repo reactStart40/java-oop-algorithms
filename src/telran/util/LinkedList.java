@@ -3,24 +3,29 @@ package telran.util;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
 public class LinkedList<T> implements List<T> {
 	Node<T> head;
 	Node<T> tail;
 	int size;
-private class LinkedListIterator implements Iterator<T>{
-
+private class LinkedListIterator implements Iterator<T> {
+Node<T> current = head;
 	@Override
 	public boolean hasNext() {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return current != null;
 	}
 
 	@Override
 	public T next() {
-		// TODO Auto-generated method stub
-		return null;
+		if (!hasNext()) {
+			throw new NoSuchElementException();
+		}
+		T res = current.obj;
+		current = current.next;
+		return res;
 	}
 	
 }
@@ -46,6 +51,9 @@ private class LinkedListIterator implements Iterator<T>{
 		return size;
 	}
 
+	
+
+	
 	@Override
 	public void add(int index, T obj) {
 		if (index < 0 || index > size) {
@@ -77,25 +85,34 @@ private class LinkedListIterator implements Iterator<T>{
 		return getNode(index).obj;
 	}
 
-	
-	@Override
-	public void sort() {
-		sort((Comparator <T>) Comparator.naturalOrder());
-
-	}
-
 	@Override
 	public void sort(Comparator<T> comp) {
-		   T [] array =(T[]) new Object[size];
-		 Arrays.sort (array, comp);
-		 Node <T> current = head;
-		  for(int i = 0;  i <  array.length; i ++) {
-			  current.obj = array [i];
-			   current = current.next;
-			   
-		  }
-	}
+		//TODO
+		//1. call the method toArray
+		//2. By applying Arrays.sort you sort the array from #1
+		//3. Passing over all LinkedList nodes and setting references to objects (T)
+		// in the appropriate order from #2
+		T[] array = toArray();
+	    Arrays.sort(array, comp);
+	    Node<T>current = head;
+	    int index = 0;
+	    while(current != null) {
+	    	current.obj = array[index++];
+	    	current = current.next;
+	    }
 
+	}
+	private T[] toArray() {
+		@SuppressWarnings("unchecked")
+		T[] array = (T[]) new Object[size];
+	    Node<T> current = head;
+	    int index = 0;
+	    while(current != null) {
+	    	array[index++] = current.obj;
+	    	current = current.next;
+	    }
+	    return array;
+	}
 	@Override
 	public int indexOf(Predicate<T> predicate) {
 		int index = 0;
@@ -232,9 +249,10 @@ private class LinkedListIterator implements Iterator<T>{
 
 	@Override
 	public Iterator<T> iterator() {
-		// TODO Auto-generated method stub
 		return new LinkedListIterator();
 	}
+
+	
 
 	
 
