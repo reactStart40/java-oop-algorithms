@@ -2,22 +2,23 @@ package telran.util;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.function.Predicate;
 
 public class Range implements Iterable<Integer> {
-	 private int min;
-	 private int max;
-	 public Range(int min, int max) {
-	 if(min >= max) {
-		 throw new IllegalArgumentException("min mast be less than max"); 
-		 }
-		 this.min = min;
-		 this.max= max;
-	 }
-	private class RangeIterator implements Iterator <Integer> {
+	private int min;
+	private int max;
+	public Range(int min, int max) {
+		if (min >= max) {
+			throw new IllegalArgumentException("min must be less than max");
+		}
+		this.min = min;
+		this.max = max;
+	}
+	private class RangeIterator implements Iterator<Integer> {
 		int current = min;
-		
 		@Override
 		public boolean hasNext() {
+			
 			return current < max;
 		}
 
@@ -27,7 +28,11 @@ public class Range implements Iterable<Integer> {
 				throw new NoSuchElementException();
 			}
 			
-			return current ++;
+			return current++;
+		}
+		@Override
+		public void remove() {
+			//TODO
 		}
 		
 	}
@@ -36,19 +41,25 @@ public class Range implements Iterable<Integer> {
 		
 		return new RangeIterator();
 	}
-	public Integer[]toArray(){
-		Integer []array = new Integer[max-min];
-		int index =0;
-		//first way
-		//for (Integer num: this) {
-		//	array[index++] = num;
-		//}
+	public Integer[] toArray() {
+		Integer [] array = new Integer[max - min];
+		int index = 0;
+		//First way
+//		for(Integer num: this) {
+//			array[index++] = num;
+//		}
 		//Second way
-		Iterator <Integer> it = iterator();
-		while(it.hasNext()){
+		Iterator<Integer> it = iterator();
+		while(it.hasNext()) {
 			array[index++] = it.next();
 		}
+		
 		return array;
 	}
+	public boolean removeIf(Predicate<Integer> predicate) {
+		//TODO
+		return false;
+	}
+	
 
 }

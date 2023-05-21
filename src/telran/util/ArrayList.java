@@ -10,12 +10,14 @@ public class ArrayList<T> implements List<T> {
 	private static final int DEFAULT_CAPACITY = 16;
 	private T[] array;
 	private int size;
+	
 private class ArrayListIterator implements Iterator<T> {
-int index = 0;
+int currentIndex = 0;
+boolean flNext = false;
 	@Override
 	public boolean hasNext() {
 		
-		return index < size;
+		return currentIndex < size;
 	}
 
 	@Override
@@ -23,8 +25,16 @@ int index = 0;
 		if(!hasNext()) {
 			throw new NoSuchElementException();
 		}
-		
-		return array[index++];
+		flNext = true;
+		return array[currentIndex++];
+	}
+	@Override
+	public void remove() {
+		if(!flNext) {
+			throw new IllegalStateException();
+		}
+		ArrayList.this.remove(--currentIndex);
+		flNext = false;
 	}
 	
 }
@@ -45,6 +55,12 @@ int index = 0;
 		array[size] = obj;
 		size++;
 		return true;
+	}
+	@Override
+	public boolean removeIf(Predicate<T> predicate) {
+		//TODO rewrite the removeIf method of ArrayList for optimization (O[N])
+		
+		return false;
 	}
 
 	private void reallocate() {
@@ -143,25 +159,7 @@ int index = 0;
 		return res;
 	}
 
-	@Override
-	public boolean removeIf(Predicate<T> predicate) {
-		int oldSize = size;
-//		int i = 0;
-//		while(i < size) {
-//			if(predicate.test(array[i])) {
-//				remove(i);
-//			} else {
-//				i++;
-//			}
-//		}
-		for(int i = size - 1; i >= 0; i--) {
-			if(predicate.test(array[i])) {
-				remove(i);
-			} 
-		}
-		return oldSize > size;
-	}
-
+	
 	@Override
 	public Iterator<T> iterator() {
 		
