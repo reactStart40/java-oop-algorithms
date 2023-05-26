@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -20,7 +21,7 @@ public abstract class CollectionTest {
 //	to here
 	protected Integer[] numbers = { 10, -20, 7, 50, 100, 30 };
 	protected Collection<Integer> collection;
-	private static final int BIG_LENGTH = 100000;
+	protected static final int BIG_LENGTH = 100000;
 	@BeforeEach
 	void setUp() {
 		collection = getCollection();
@@ -71,9 +72,13 @@ public abstract class CollectionTest {
 			bigArray[i] = 10;
 		}
 		Integer actualArray[] = collection.toArray(bigArray);
+		Arrays.sort(actualArray,0, collection.size());
+		
 		int size = collection.size();
+		Integer expected[]=Arrays.copyOf(numbers, numbers.length);
+		Arrays.sort(expected);
 		for(int i = 0; i < size; i++) {
-			assertEquals(numbers[i], actualArray[i]);
+			assertEquals(expected[i], actualArray[i]);
 		}
 		assertNull(actualArray[size]);
 		assertTrue(bigArray == actualArray);
