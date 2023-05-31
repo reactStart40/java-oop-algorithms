@@ -2,6 +2,8 @@ package telran.util.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.BeforeEach;
 
 import telran.util.*;
@@ -134,7 +136,17 @@ protected Collection<Integer> getCollection() {
 		assertEquals(-1, list.indexOf(a -> a % 2 != 0 && a > 7));
 	}
 	
+
+@Override
+protected Integer[] getActual(Integer[] array, int size) {
 	
+	return array;
+}
+ @Override
+ protected  Integer[]getExpected (Integer [] array){
+	
+	  return array;
+ }
 	
 	
 	static private int evenOddCompare(Integer a, Integer b) {

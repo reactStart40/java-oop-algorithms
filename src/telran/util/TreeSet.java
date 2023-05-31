@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class TreeSet<T> implements Set<T> {
+public class TreeSet<T> implements SortedSet<T> {
 	private static class Node<T> {
 		T obj;
 		Node<T> parent;
@@ -178,12 +178,17 @@ public class TreeSet<T> implements Set<T> {
 			} else {
 				parent.right = child;
 			}
-			if (child != null) {
-				child.parent = parent;
-			}
+			
 		}
-		
+		if (child != null) {
+			child.parent = parent;
+		}
+	node.parent = null;   
+	node.obj=null;
+	node.left = null;
+	node.right = null;
 	}
+	 
 	@Override
 	public boolean contains(T pattern) {
 		
@@ -194,6 +199,26 @@ public class TreeSet<T> implements Set<T> {
 	public Iterator<T> iterator() {
 		
 		return new TreeSetIterator();
+	}
+	@Override
+	public T first() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public T last() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public T celling(T key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public T floor(T key) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

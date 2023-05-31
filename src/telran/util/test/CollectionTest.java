@@ -7,8 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Random;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -65,25 +67,31 @@ public abstract class CollectionTest {
 		assertTrue(collection.removeIf(a -> true));
 		assertEquals(0, collection.size());
 	}
+	protected abstract Integer [] getActual(Integer[] actual, int size);
+	protected abstract Integer[] getExpected(Integer[] expected);
 	@Test
 	void testToArrayForBigArray() {
 		Integer bigArray[] = new Integer[BIG_LENGTH];
 		for(int i = 0; i < BIG_LENGTH; i++) {
 			bigArray[i] = 10;
 		}
-		Integer actualArray[] = collection.toArray(bigArray);
+		Integer actualArray[] = getActual(collection.toArray(bigArray), collection.size());
+		Integer expected []= getExpected(numbers);
+	
+		
 		int size = collection.size();
 		for(int i = 0; i < size; i++) {
-			assertEquals(numbers[i], actualArray[i]);
+			assertEquals(expected[i], actualArray[i]);
 		}
 		assertNull(actualArray[size]);
 		assertTrue(bigArray == actualArray);
 	}
 	@Test
 	void testToArrayForEmptyArray() {
-		Integer actualArray[] =
-				collection.toArray(new Integer[0]);
-		assertArrayEquals(numbers, actualArray);
+		
+		Integer actualArray[] = getActual(collection.toArray(new Integer[0]), collection.size());
+		Integer expected []= getExpected(numbers);
+		assertArrayEquals(expected, actualArray);
 	}
 	@Test
 	void testIterator() {
@@ -116,10 +124,7 @@ public abstract class CollectionTest {
 		assertTrue(collection.contains(removed));
 		it.remove();
 		assertFalse(collection.contains(removed));
-		
-		
-		
-		
+
 	}
 	@Test
 	void testContains() {
@@ -136,8 +141,9 @@ public abstract class CollectionTest {
 	@Test
 	void clearPerformance() {
 		Collection<Integer> bigCollection = getCollection();
+		 Random gen = new Random();
 		for(int i = 0; i < 1_000_000; i++) {
-			bigCollection.add(i);
+			bigCollection.add(gen.nextInt());
 		}
 		bigCollection.clear();
 		assertEquals(0, bigCollection.size());
