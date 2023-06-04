@@ -135,18 +135,17 @@ protected Collection<Integer> getCollection() {
 		list.add(-17);
 		assertEquals(-1, list.indexOf(a -> a % 2 != 0 && a > 7));
 	}
+	@Override
+	protected Integer[] getActual(Integer[] array, int size) {
+		
+		return array;
+	}
+	@Override
+	protected Integer[] getExpected(Integer[] array) {
+		
+		return array;
+	}
 	
-
-@Override
-protected Integer[] getActual(Integer[] array, int size) {
-	
-	return array;
-}
- @Override
- protected  Integer[]getExpected (Integer [] array){
-	
-	  return array;
- }
 	
 	
 	static private int evenOddCompare(Integer a, Integer b) {

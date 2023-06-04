@@ -41,5 +41,6 @@ default  boolean isEqual(T object, T pattern) {
 }
 default void clear() {
 	removeIf(element -> true);
-};
+}
+T ceiling(T element);;
 }
