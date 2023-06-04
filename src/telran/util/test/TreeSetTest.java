@@ -13,10 +13,10 @@ public class TreeSetTest extends SortedSetTest {
 		
 		return new TreeSet<>();
 	}
-	@Override
-	@Test
-	void clearPerformance() {
+	//@Override
+	//@Test
+	//void clearPerformance() {
 		
-	}
+	//}
 
 }
