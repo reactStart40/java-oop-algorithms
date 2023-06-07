@@ -49,5 +49,14 @@ class LineRecursionTest {
 		assertArrayEquals(expected, LineRecursion.reverse(array));
 		assertArrayEquals(expected1, LineRecursion.reverse(array1));
 	}
-
+	void squareTest() {
+	    assertEquals(0,LineRecursion.square(0));
+	    assertEquals(25,LineRecursion.square(5));
+	    assertEquals(1,LineRecursion.square(-1));
+	    assertEquals(16,LineRecursion.square(-4));
+	}
+	void isSubstringTest() {
+	    assertTrue(LineRecursion.isSubstring("Good morning", "Good"));
+	    assertFalse(LineRecursion.isSubstring("Good morning", "foo"));
+	}
 }
